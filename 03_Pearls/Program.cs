@@ -1,14 +1,67 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
+using Helpers;
 
 namespace _03_Pearls;
 
+
+public enum enPearlColor { Black, White, Pink }
+public enum enPearlShape { Spherical, Droplet, Square }
+public enum enPearlType { Freshwater, Saltwater, Swampwater }
+
+class csPearl
+{
+
+    //public const int PearlMinSize = 5;
+    //public const int PearlMaxSize = 25;
+
+    public int Milimeter { get; init; }
+    public enPearlColor Color { get; init; }
+    public enPearlShape Shape { get; init; }
+    public enPearlType Type { get; init; }
+
+    public csPearl(csSeedGenerator _rnd)
+    {
+        Color = _rnd.FromEnum<enPearlColor>();
+        Shape = _rnd.FromEnum<enPearlShape>();
+        Type = _rnd.FromEnum<enPearlType>();
+        Milimeter = _rnd.Next(5, 26);
+    }
+
+    public override string ToString()
+    {
+        return $"{Milimeter}mm {Color} {Shape} {Type} pearl \n";
+    }
+
+}
+
 class Program
 {
+
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        // Skapar en lista för att lagra pärlorna i halsbandet
+        List<csPearl> necklace = new List<csPearl>();
+
+        for (int i = 0; i < 10; i++)
+        {
+            Console.WriteLine("Pärlhalsband: \n");
+            
+            var rnd = new csSeedGenerator();
+            var pearl = new csPearl(rnd);
+
+            necklace.Add(pearl);
+
+            Console.WriteLine(pearl);
+        }
+
+        foreach (var pearl in necklace)
+        {
+            Console.WriteLine(pearl);
+        }
+
     }
 }
 
